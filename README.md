@@ -1,73 +1,29 @@
-# React + TypeScript + Vite
+# Test MFE
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Design the remote as content inside an existing product frame, not as a full
+standalone app. The shell should own the global chrome, and the example app should
+feel like a workspace panel dropped into it.
 
-Currently, two official plugins are available:
+ 1. Avoid duplicate layout chrome. Don’t render a second sidebar, top nav, or app 
+shell inside the remote unless it is truly local navigation.
+ 2. Assume constrained space. The remote should stretch to the container 
+width/height, handle smaller viewports gracefully, and avoid fixed page-level spacing
+ that fights the shell.
+ 3. Match visual language. Reuse the shell’s spacing, typography, border radius, 
+shadows, and color tokens so the transition feels native.
+ 4. Design for loading and failure states. The shell already has app-loading 
+behavior, so the remote should also have clear empty, loading, and error states for 
+its own internal data.
+ 5. Keep context obvious. A strong page title, short summary, and clear primary 
+action help the user know what the remote is for as soon as it opens.
+ 6. Prefer self-contained surfaces. Cards, tables, filters, and detail panels work 
+well; full-screen marketing-style layouts usually do not.
+ 7. Be careful with navigation. Let the shell own app switching. Inside the remote, 
+keep navigation local and lightweight.
+ 8. Plan for isolation. CSS should not leak into the shell, and the remote should not
+ assume global styles beyond the shared baseline.
+ 9. Keep first render fast. A shell-loaded remote feels slow quickly, so favor a 
+small initial screen with progressive disclosure over a dense dashboard dump.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
-
-## React Compiler
-
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+A good default for an example is: header + KPI row + one main table/list + one
+side/detail panel or action area. That usually fits naturally inside a host shell

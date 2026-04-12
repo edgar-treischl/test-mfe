@@ -2,6 +2,11 @@ import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 import federation from '@originjs/vite-plugin-federation';
 
+const sharedModules: Record<string, { singleton: boolean }> = {
+  react: { singleton: true },
+  'react-dom': { singleton: true },
+};
+
 export default defineConfig({
   // IMPORTANT for GitHub Pages deployment
   base: '/test-mfe/',
@@ -15,11 +20,7 @@ export default defineConfig({
         './HRApp': './src/App.tsx',
       },
 
-      // POC fix for TS issue
-      shared: {
-        react: { singleton: true },
-        'react-dom': { singleton: true },
-      } as any,
+      shared: sharedModules,
     }),
   ],
 
