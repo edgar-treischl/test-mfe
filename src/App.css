@@ -32,8 +32,7 @@
 .penguins-app .summary-chip,
 .penguins-app .controls-card,
 .penguins-app .chart-card,
-.penguins-app .stat-card,
-.penguins-app .legend-card {
+.penguins-app .stat-card {
   border: 1px solid var(--border);
   border-radius: 18px;
   background: var(--panel-bg);
@@ -59,8 +58,7 @@
 }
 
 .penguins-app .controls-card,
-.penguins-app .chart-card,
-.penguins-app .legend-card {
+.penguins-app .chart-card {
   padding: 18px;
 }
 
@@ -68,6 +66,38 @@
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 12px;
+}
+
+.penguins-app .view-switch,
+.penguins-app .info-card,
+.penguins-app .dataset-hero-card {
+  border: 1px solid var(--border);
+  border-radius: 18px;
+  background: var(--panel-bg);
+  box-shadow: var(--shadow);
+}
+
+.penguins-app .view-switch {
+  display: inline-flex;
+  gap: 8px;
+  padding: 6px;
+  align-self: flex-start;
+}
+
+.penguins-app .view-tab {
+  border: 0;
+  border-radius: 12px;
+  background: transparent;
+  color: var(--text);
+  padding: 10px 14px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.penguins-app .view-tab.is-active {
+  background: var(--bg);
+  color: var(--text-h);
+  box-shadow: inset 0 0 0 1px var(--border);
 }
 
 .penguins-app .field {
@@ -92,11 +122,34 @@
   font-size: 14px;
 }
 
-.penguins-app .content-grid {
+.penguins-app .stats-row {
   display: grid;
-  grid-template-columns: minmax(0, 2fr) minmax(240px, 1fr);
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+
+.penguins-app .dataset-layout {
+  display: grid;
   gap: 16px;
-  align-items: start;
+}
+
+.penguins-app .dataset-hero-card,
+.penguins-app .info-card {
+  padding: 18px;
+}
+
+.penguins-app .dataset-copy {
+  max-width: 72ch;
+}
+
+.penguins-app .dataset-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 16px;
+}
+
+.penguins-app .info-card-wide {
+  grid-column: 1 / -1;
 }
 
 .penguins-app .card-heading {
@@ -104,18 +157,30 @@
 }
 
 .penguins-app .card-heading p,
-.penguins-app .legend-card p {
+.penguins-app .chart-legend p {
   margin-top: 6px;
 }
 
 .penguins-app .chart-frame {
   overflow-x: auto;
+  max-width: 760px;
+  margin-inline: auto;
 }
 
 .penguins-app .chart {
   width: 100%;
   height: auto;
   display: block;
+}
+
+.penguins-app .chart-legend {
+  margin-top: 18px;
+  padding-top: 18px;
+  border-top: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  gap: 16px;
+  align-items: start;
 }
 
 .penguins-app .grid-line {
@@ -150,11 +215,6 @@
   stroke-width: 2;
 }
 
-.penguins-app .sidebar {
-  display: grid;
-  gap: 12px;
-}
-
 .penguins-app .stat-card {
   padding: 16px 18px;
   display: flex;
@@ -172,12 +232,73 @@
   font-size: 14px;
 }
 
-.penguins-app .legend-list {
+.penguins-app .table-wrap {
+  overflow-x: auto;
+}
+
+.penguins-app .data-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: var(--text-h);
+}
+
+.penguins-app .data-table th,
+.penguins-app .data-table td {
+  padding: 12px 0;
+  text-align: left;
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+}
+
+.penguins-app .data-table th {
+  font-size: 13px;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text);
+}
+
+.penguins-app .pill-list {
   list-style: none;
   margin: 16px 0 0;
   padding: 0;
-  display: grid;
+  display: flex;
+  flex-wrap: wrap;
   gap: 10px;
+}
+
+.penguins-app .pill-list li {
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  padding: 8px 12px;
+  color: var(--text-h);
+  background: var(--bg);
+}
+
+.penguins-app .dataset-figure {
+  margin: 16px 0 0;
+}
+
+.penguins-app .dataset-image {
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  display: block;
+  border-radius: 14px;
+  background: var(--bg);
+}
+
+.penguins-app .dataset-figure figcaption {
+  margin-top: 10px;
+  font-size: 14px;
+}
+
+.penguins-app .legend-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px 18px;
 }
 
 .penguins-app .legend-list li {
@@ -193,13 +314,18 @@
   border-radius: 999px;
 }
 
+.penguins-app .note-list {
+  display: grid;
+  gap: 12px;
+  margin-top: 16px;
+}
+
 @media (max-width: 900px) {
   .penguins-app .panel {
     padding: 20px;
   }
 
-  .penguins-app .panel-header,
-  .penguins-app .content-grid {
+  .penguins-app .panel-header {
     grid-template-columns: 1fr;
     display: grid;
   }
@@ -208,7 +334,27 @@
     min-width: 0;
   }
 
+  .penguins-app .stats-row {
+    grid-template-columns: 1fr;
+  }
+
+  .penguins-app .dataset-grid {
+    grid-template-columns: 1fr;
+  }
+
   .penguins-app .control-grid {
     grid-template-columns: 1fr;
+  }
+
+  .penguins-app .chart-legend {
+    grid-template-columns: 1fr;
+  }
+
+  .penguins-app .view-switch {
+    width: 100%;
+  }
+
+  .penguins-app .view-tab {
+    flex: 1;
   }
 }
